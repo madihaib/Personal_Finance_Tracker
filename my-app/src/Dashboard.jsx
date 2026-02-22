@@ -3,19 +3,45 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    // Retrieve the logged-in user's name from localStorage
-    // You would set this when the user logs in, e.g.:
-    // localStorage.setItem('userName', response.data.full_name);
     const storedName = localStorage.getItem('userName');
     if (storedName) {
       setUserName(storedName);
     } else {
-      // Fallback if no name is stored
       setUserName('there');
     }
   }, []);
+
+  // fetch transactions from backend
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const token = localStorage.getItem('token');
+      
+      if (!token) return; 
+
+      try {
+        const response = await fetch('http://localhost:5000/api/transactions', {
+          headers: {
+            'Authorization': `Bearer ${token}` // Proves the user is logged in
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          setTransactions(data);
+        } else {
+          console.error('Failed to fetch transactions:', data.error);
+        }
+      } catch (error) {
+        console.error('Network error fetching transactions:', error);
+      }
+    };
+
+    fetchTransactions();
+  }, []); 
 
   return (
     <div className="dashboard">

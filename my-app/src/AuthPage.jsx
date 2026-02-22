@@ -57,17 +57,29 @@ const AuthPage = () => {
     setIsSubmitting(true);
     setMessage('');
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login with', loginData);
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: loginData.email, 
+          password: loginData.password 
+        })
+      });
 
-      // --- SUCCESS: redirect to dashboard ---
-      // Optionally store a token or user info in localStorage
-      localStorage.setItem('isAuthenticated', 'true');
-      navigate('/dashboard');  // <-- redirect
+      const data = await response.json();
 
-    } catch {
-      setMessage({ type: 'error', text: 'Login failed' });
+      if (response.ok) {
+        // Save the JWT token and user info to localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('isAuthenticated', 'true');
+        
+        navigate('/dashboard'); 
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Login failed' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Network error. Is the server running?' });
     } finally {
       setIsSubmitting(false);
     }
@@ -83,18 +95,31 @@ const AuthPage = () => {
     }
     setIsSubmitting(true);
     setMessage('');
+    
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Signup with', signupData);
-      setMessage({ type: 'success', text: 'Account created! You can now log in.' });
-      // Clear form and optionally switch to login view after a delay
-      setSignupData({ name: '', email: '', password: '' });
-      setTimeout(() => {
-        setIsLogin(true);
-        navigate('/');  // redirect to login page (which is the same AuthPage with isLogin=true)
-      }, 2000);
-    } catch {
-      setMessage({ type: 'error', text: 'Signup failed' });
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: signupData.name,
+          email: signupData.email,
+          password: signupData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: 'Account created!' });
+        setSignupData({ name: '', email: '', password: '' });
+        setTimeout(() => {
+          setIsLogin(true);
+        }, 2000);
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Signup failed' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Network error.' });
     } finally {
       setIsSubmitting(false);
     }
