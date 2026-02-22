@@ -1,0 +1,287 @@
+/* Dashboard.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f5f7fa;
+  color: #1a1f36;
+}
+
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+.profile-icon {
+  width: 48px;
+  height: 48px;
+  background: #e0e4f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* Grid layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1f36;
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Budget card specifics */
+.budget-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #718096;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+.budget-summary {
+  background: #f7fafc;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.net-worth {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+.net-worth-label {
+  font-weight: 700;
+  color: #1a1f36;
+}
+
+.net-worth-change {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+.net-worth-period {
+  color: #a0aec0;
+}
+
+/* Chart placeholders */
+.chart-placeholder {
+  margin-top: 10px;
+}
+
+.x-axis, .y-axis {
+  font-size: 12px;
+  color: #718096;
+  margin-bottom: 8px;
+}
+
+.fake-chart {
+  height: 120px;
+  background: linear-gradient(45deg, #e2e8f0 25%, #cbd5e0 25%, #cbd5e0 50%, #e2e8f0 50%, #e2e8f0 75%, #cbd5e0 75%);
+  background-size: 20px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Transaction lists */
+.transaction-list {
+  list-style: none;
+}
+
+.transaction-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.transaction-list li:last-child {
+  border-bottom: none;
+}
+
+.transaction-list li span:first-child {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.transaction-list li span:last-child {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+/* Goals */
+.goal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.goal-name {
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+.goal-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1f36;
+}
+
+.goal-progress {
+  font-size: 14px;
+  color: #718096;
+}
+
+/* Streaming */
+.streaming-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.streaming-item span:last-child {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+/* Recurring */
+.recurring-item, .credit-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.due-amount {
+  color: #e53e3e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Help card */
+.help-card p {
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #2d3748;
+}
+
+.down-payment {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #f7fafc;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.down-payment .amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1f36;
+}
+
+.down-payment .progress {
+  font-size: 14px;
+  color: #718096;
+}
+
+/* Credit card */
+.credit-card .credit-detail {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
