@@ -1,21 +1,17 @@
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = process.env.JWT_SECRET || 'hackathon_secret_key';
+const SECRET_KEY = process.env.JWT_SECRET || 'hackathon_super_secret_key_2026';
 
 const authenticateToken = (req, res, next) => {
-  // Get the token from the request header
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; 
+  const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ error: 'Access denied. Please log in.' });
+    return res.status(401).json({ error: 'Access denied. No token provided.' });
   }
 
-  // Verify 
   jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: 'Invalid or expired token.' });
-    }
+    if (err) return res.status(403).json({ error: 'Invalid or expired token.' });
     
     req.user = user; 
     next(); 

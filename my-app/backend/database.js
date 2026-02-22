@@ -1,4 +1,3 @@
-// backend/database.js
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
@@ -8,10 +7,8 @@ const db = new sqlite3.Database(dbPath, (err) => {
   console.log('Connected to the finance database.');
 });
 
-// Enable foreign keys
 db.run('PRAGMA foreign_keys = ON;');
 
-// Create tables (simplified version)
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
@@ -37,17 +34,6 @@ db.serialize(() => {
   `);
 
   db.run(`
-    CREATE TABLE IF NOT EXISTS categories (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      name TEXT NOT NULL,
-      type TEXT DEFAULT 'expense',
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-      UNIQUE(user_id, name)
-    )
-  `);
-
-  db.run(`
     CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL,
@@ -58,12 +44,9 @@ db.serialize(() => {
       description TEXT,
       merchant TEXT,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-      FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
-      FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+      FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
     )
   `);
-
-  // Add more tables as needed (budgets, recurring, goals, etc.)
 });
 
 module.exports = db;
