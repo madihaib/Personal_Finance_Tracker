@@ -1,0 +1,56 @@
+brary(tidyverse)#
+library(fastRhockey)#
+#
+teams <- espn_nhl_teams()#
+#
+team_colors <- teams %>%#
+  select(display_name, color,alternate_color)%>%#
+  mutate(across(c(color,alternate_color),~paste0("#",.)))#
+team_colors_long <- team_colors%>%#
+  pivot_longer(cols=c(color,alternate_color),#
+               names_to = "type", values_to = "hex")%>%#
+  arrange(display_name)%>%#
+  mutate(#
+    display_name = factor(display_name, levels=rev(unique(display_name))),#
+    type=factor(type, levels = c("color","alternate_color"))#
+  )#
+#
+ggplot(team_colors_long, aes(x=type, y=display_name, fill=hex))+#
+  geom_tile(color="white",linewidth=1)+#
+  scale_fill_identity()+#
+  labs(title= "NHL Colors (A-Z)",x= NULL, y= NULL)+#
+  theme_minimal(base_size = 12)+#
+  theme(#
+    axis.text.y= element_text(size=10),#
+    strip.text= element_blank(),#
+    panel.grid = element_blank(),#
+    plot.title = element_text(hjust=0.5,face="bold")#
+  )
+library(tidyverse)#
+library(fastRhockey)#
+#
+teams <- espn_nhl_teams()#
+#
+team_colors <- teams %>%#
+  select(display_name, color,alternate_color)%>%#
+  mutate(across(c(color,alternate_color),~paste0("#",.)))#
+team_colors_long <- team_colors%>%#
+  pivot_longer(cols=c(color,alternate_color),#
+               names_to = "type", values_to = "hex")%>%#
+  arrange(display_name)%>%#
+  mutate(#
+    display_name = factor(display_name, levels=rev(unique(display_name))),#
+    type=factor(type, levels = c("color","alternate_color"))#
+  )#
+#
+ggplot(team_colors_long, aes(x=type, y=display_name, fill=hex))+#
+  geom_tile(color="white",linewidth=1)+#
+  scale_fill_identity()+#
+  labs(title= "NHL Colors (A-Z)",x= NULL, y= NULL)+#
+  theme_minimal(base_size = 12)+#
+  theme(#
+    axis.text.y= element_text(size=10),#
+    strip.text= element_blank(),#
+    panel.grid = element_blank(),#
+    plot.title = element_text(hjust=0.5,face="bold")#
+  )
